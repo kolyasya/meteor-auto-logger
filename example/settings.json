@@ -1,0 +1,17 @@
+{
+  "name": "example",
+  "packages": {
+    "kolyasya:auto-logger": {
+      "enablePackageDebugLogs": true,
+
+      "enableDDPAutoLogger": true,
+
+      "enableDDPFileLogger": true,
+
+      "enableDDPTallyLogger": true,
+      "DDPTallyLoggerSeconds": 15,
+
+      "customCacheTime": 300000
+    }
+  }
+}

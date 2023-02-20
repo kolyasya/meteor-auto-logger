@@ -1,0 +1,15 @@
+{
+  "lockfileVersion": 1,
+  "dependencies": {
+    "lodash.isfunction": {
+      "version": "3.0.9",
+      "resolved": "https://registry.npmjs.org/lodash.isfunction/-/lodash.isfunction-3.0.9.tgz",
+      "integrity": "sha512-AirXNj15uRIMMPihnkInB4i3NHeb4iBtNg9WRWuK2o31S+ePwwNmDPaTL3o7dTJ+VXNZim7rFs4rxN4YU1oUJw=="
+    },
+    "ylru": {
+      "version": "1.2.1",
+      "resolved": "https://registry.npmjs.org/ylru/-/ylru-1.2.1.tgz",
+      "integrity": "sha512-faQrqNMzcPCHGVC2aaOINk13K+aaBDUPjGWl0teOXywElLjyVAB6Oe2jj62jHYtwsU49jXhScYbvPENK+6zAvQ=="
+    }
+  }
+}
