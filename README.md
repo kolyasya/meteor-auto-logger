@@ -14,7 +14,7 @@ meteor add kolyasya:auto-logger
 
 ## Package settings:
 
-```json
+```js
 {
   // ...regular Meteor settings.json file...
 
@@ -49,7 +49,7 @@ meteor add kolyasya:auto-logger
 
 ## Usage example:
 
-```javascript
+```js
 import AutoLogger from "meteor/kolyasya:auto-logger";
 
 new AutoLogger({
