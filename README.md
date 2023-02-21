@@ -1,5 +1,11 @@
 # kolyasya:auto-logger — Log Meteor DDP events automatically
 
+## Features:
+
+- Print all DDP messages (except ping/pong and filtered by `ddpMessageFilter` to server console)
+- Print all DDP messages into ddp-log.json file
+- Print summary of called subsciptions and methods to server console by interval 
+
 ## Installation:
 
 ```
@@ -8,15 +14,16 @@ meteor add kolyasya:auto-logger
 
 ## Package settings:
 
-```
+```json
 {
-...regular Meteor settings.json file...
+  // ...regular Meteor settings.json file...
 
   packages: {
 
-    ...other packages settings...,
+    // ...other packages settings...,
 
     "kolyasya:auto-logger": {
+
       // Logs for debugging purposes, not needed in normal circumstances
       "enablePackageDebugLogs": false,
 
@@ -38,4 +45,25 @@ meteor add kolyasya:auto-logger
     }
   }
 }
+```
+
+## Usage example:
+
+```javascript
+import AutoLogger from "meteor/kolyasya:auto-logger";
+
+new AutoLogger({
+  // Doing it like this to preserve 'this'
+  eventsLogger: (message) => {
+    console.log("This is events log message:", message);
+  },
+  tallyLogger: (message) => {
+    console.log("This is tally log message:", message);
+  },
+
+  ddpMessageFilter: ({ messageJSON }) => {
+    // Exclude loggly messages
+    return messageJSON?.method?.includes("loggly.") ? false : true;
+  },
+});
 ```
