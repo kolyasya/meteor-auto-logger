@@ -9,7 +9,7 @@ import PingPongTally from './utils/PingPongTally';
  * DDP Ping Pong Tally (Message statistics, timer driven, written to console, on by default)
  * Calculates stats for a given interval
  */
-const startPingPongTally = ({ packageSettings, tallyLogger }) => {
+const startPingPongTally = async ({ packageSettings, tallyLogger }) => {
   const packageLogger = getPackageLogger();
 
   packageLogger('Starting Ping Pong Tally...');
@@ -35,7 +35,7 @@ const startPingPongTally = ({ packageSettings, tallyLogger }) => {
     })
   );
 
-  Meteor.setInterval(() => {
+  await Meteor.setInterval(async () => {
     // This looks like it's also accessible from Meteor.default_server.  Difference?
     for (let [sessionKey, session] of Meteor.server.sessions) {
       // Construct the pieces of the message
@@ -54,7 +54,7 @@ const startPingPongTally = ({ packageSettings, tallyLogger }) => {
         c => c && !c.startsWith('meteor_')
       );
 
-      const prettyUser = getPrettyUser(session.userId);
+      const prettyUser = await getPrettyUser(session.userId);
 
       const collectionCounts = collectionsNames.map(
         c => c + ': ' + collectionViews.get(c).documents.size

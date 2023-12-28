@@ -3,7 +3,7 @@ import { LinksCollection } from "/imports/api/links";
 
 import AutoLogger from "meteor/kolyasya:auto-logger";
 
-new AutoLogger({
+const autoLogger = new AutoLogger({
   // Doing it like this to preserve 'this'
   eventsLogger: (message) => {
     console.log("This is events log message:", message);
@@ -16,6 +16,7 @@ new AutoLogger({
     return messageJSON?.method?.includes("loggly.") ? false : true;
   },
 });
+await autoLogger.start();
 
 async function insertLink({ title, url }) {
   await LinksCollection.insertAsync({ title, url, createdAt: new Date() });

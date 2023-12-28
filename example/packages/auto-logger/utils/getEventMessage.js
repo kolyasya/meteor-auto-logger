@@ -1,7 +1,7 @@
 import getPrettyUser from './getPrettyUser';
 import isFunction from 'lodash.isfunction';
 
-const getEventMessage = ({ clientAddress, eventsLoggerFilter, messageJSON, userId }) => {
+const getEventMessage = async ({ clientAddress, eventsLoggerFilter, messageJSON, userId }) => {
   if (isFunction(eventsLoggerFilter)) {
     if (!eventsLoggerFilter({ messageJSON })) {
       return;
@@ -33,7 +33,7 @@ const getEventMessage = ({ clientAddress, eventsLoggerFilter, messageJSON, userI
     createdAt: new Date(),
   };
 
-  let eventMessage = `${getPrettyUser(userId)}@${clientAddress}: ${event.type}`;
+  let eventMessage = `${await getPrettyUser(userId)}@${clientAddress}: ${event.type}`;
 
   if (event.name) {
     eventMessage += ` ${event.name}`;

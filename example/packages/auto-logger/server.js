@@ -1,15 +1,16 @@
-import { Meteor } from 'meteor/meteor';
-import path from 'path';
-import isFunction from 'lodash.isfunction';
+import { Meteor } from "meteor/meteor";
+import path from "path";
+import isFunction from "lodash.isfunction";
 
-import startDDPLogger from './startDDPLogger';
-import startPingPongTally from './startPingPongTally';
+import startDDPLogger from "./startDDPLogger";
+import startPingPongTally from "./startPingPongTally";
 
-import startDDPFileLogger from './startDDPFileLogger';
+import startDDPFileLogger from "./startDDPFileLogger";
 
-import getPackageLogger from './utils/getPackageLogger';
+import getPackageLogger from "./utils/getPackageLogger";
 
-const meteorRootPath = path?.resolve('.')?.split(`${path.sep}.meteor`)?.[0] || '../../../../..';
+const meteorRootPath =
+  path?.resolve(".")?.split(`${path.sep}.meteor`)?.[0] || "../../../../..";
 
 const defaultSettings = {
   enablePackageDebugLogs: false,
@@ -27,7 +28,7 @@ const defaultSettings = {
 
 const packageSettings = {
   ...defaultSettings,
-  ...(Meteor.settings?.packages?.['kolyasya:auto-logger'] || {}),
+  ...(Meteor.settings?.packages?.["kolyasya:auto-logger"] || {}),
 };
 
 export default class AutoLogger {
@@ -36,7 +37,7 @@ export default class AutoLogger {
     // This is logger for package debugging purposes
     this.packageLogger = getPackageLogger({ packageSettings });
 
-    this.packageLogger('Init AutoLogger instance...');
+    this.packageLogger("Init AutoLogger instance...");
 
     if (isFunction(eventsLogger)) {
       this.eventsLogger = eventsLogger;
@@ -48,11 +49,13 @@ export default class AutoLogger {
       this.eventsLoggerFilter = eventsLoggerFilter;
     }
 
-    this.packageLogger('Final package settings:', packageSettings);
-    this.packageLogger('Init params:', params);
+    this.packageLogger("Final package settings:", packageSettings);
+    this.packageLogger("Init params:", params);
+  }
 
+  async start() {
     if (packageSettings?.enableDDPAutoLogger && this.eventsLogger) {
-      startDDPLogger({
+      await startDDPLogger({
         packageSettings,
         eventsLogger: this.eventsLogger,
         eventsLoggerFilter: this.eventsLoggerFilter,
@@ -60,7 +63,7 @@ export default class AutoLogger {
     }
 
     if (packageSettings?.enableDDPTallyLogger && this.tallyLogger) {
-      startPingPongTally({
+      await startPingPongTally({
         packageSettings,
         tallyLogger: this.tallyLogger,
       });
