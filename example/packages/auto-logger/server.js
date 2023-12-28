@@ -50,9 +50,11 @@ export default class AutoLogger {
 
     this.packageLogger('Final package settings:', packageSettings);
     this.packageLogger('Init params:', params);
+  }
 
+  async start() {
     if (packageSettings?.enableDDPAutoLogger && this.eventsLogger) {
-      startDDPLogger({
+      await startDDPLogger({
         packageSettings,
         eventsLogger: this.eventsLogger,
         eventsLoggerFilter: this.eventsLoggerFilter,
@@ -60,7 +62,7 @@ export default class AutoLogger {
     }
 
     if (packageSettings?.enableDDPTallyLogger && this.tallyLogger) {
-      startPingPongTally({
+      await startPingPongTally({
         packageSettings,
         tallyLogger: this.tallyLogger,
       });

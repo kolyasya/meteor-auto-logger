@@ -8,7 +8,9 @@ declare module "meteor/kolyasya:auto-logger" {
       tallyLogger?: (message: string) => void;
       eventsLoggerFilter?: (params: {
         messageJSON: Record<string, unknown>;
-      }) => voidFilter;
+      }) => void;
     });
+
+    start: () => Promise<void>;
   }
 }
