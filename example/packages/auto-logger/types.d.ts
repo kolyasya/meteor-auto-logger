@@ -10,5 +10,7 @@ declare module "meteor/kolyasya:auto-logger" {
         messageJSON: Record<string, unknown>;
       }) => voidFilter;
     });
+
+    start(): Promise<void>;
   }
 }
