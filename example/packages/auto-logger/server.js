@@ -1,15 +1,16 @@
-import { Meteor } from 'meteor/meteor';
-import path from 'path';
-import isFunction from 'lodash.isfunction';
+import { Meteor } from "meteor/meteor";
+import path from "path";
+import isFunction from "lodash.isfunction";
 
-import startDDPLogger from './startDDPLogger';
-import startPingPongTally from './startPingPongTally';
+import startDDPLogger from "./startDDPLogger";
+import startPingPongTally from "./startPingPongTally";
 
-import startDDPFileLogger from './startDDPFileLogger';
+import startDDPFileLogger from "./startDDPFileLogger";
 
-import getPackageLogger from './utils/getPackageLogger';
+import getPackageLogger from "./utils/getPackageLogger";
 
-const meteorRootPath = path?.resolve('.')?.split(`${path.sep}.meteor`)?.[0] || '../../../../..';
+const meteorRootPath =
+  path?.resolve(".")?.split(`${path.sep}.meteor`)?.[0] || "../../../../..";
 
 const defaultSettings = {
   enablePackageDebugLogs: false,
@@ -36,7 +37,7 @@ export default class AutoLogger {
     // This is logger for package debugging purposes
     this.packageLogger = getPackageLogger({ packageSettings });
 
-    this.packageLogger('Init AutoLogger instance...');
+    this.packageLogger("Init AutoLogger instance...");
 
     if (isFunction(eventsLogger)) {
       this.eventsLogger = eventsLogger;
