@@ -31,12 +31,11 @@ const packageSettings = {
 };
 
 export default class AutoLogger {
-  constructor(params) {
+  static async start(params) {
     const { eventsLogger, tallyLogger, eventsLoggerFilter } = params;
+
     // This is logger for package debugging purposes
     this.packageLogger = getPackageLogger({ packageSettings });
-
-    this.packageLogger('Init AutoLogger instance...');
 
     if (isFunction(eventsLogger)) {
       this.eventsLogger = eventsLogger;
@@ -50,9 +49,7 @@ export default class AutoLogger {
 
     this.packageLogger('Final package settings:', packageSettings);
     this.packageLogger('Init params:', params);
-  }
 
-  async start() {
     if (packageSettings?.enableDDPAutoLogger && this.eventsLogger) {
       await startDDPLogger({
         packageSettings,

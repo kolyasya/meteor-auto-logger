@@ -3,7 +3,7 @@ import { LinksCollection } from "/imports/api/links";
 
 import AutoLogger from "meteor/kolyasya:auto-logger";
 
-new AutoLogger({
+await AutoLogger.start({
   // Doing it like this to preserve 'this'
   eventsLogger: (message) => {
     console.log("This is events log message:", message);

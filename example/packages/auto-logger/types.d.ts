@@ -1,6 +1,6 @@
 declare module "meteor/kolyasya:auto-logger" {
   export default class AutoLogger {
-    constructor(params: {
+    static start(params: {
       eventsLogger?: (
         eventMessage: string,
         event: Record<string, unknown>
@@ -9,8 +9,6 @@ declare module "meteor/kolyasya:auto-logger" {
       eventsLoggerFilter?: (params: {
         messageJSON: Record<string, unknown>;
       }) => voidFilter;
-    });
-
-    start(): Promise<void>;
+    }): Promise<void>;
   }
 }
