@@ -31,6 +31,12 @@ const packageSettings = {
 };
 
 export default class AutoLogger {
+  constructor() {
+    if (this instanceof AutoLogger) {
+      throw Error('AutoLogger class cannot be instantiated.');
+    }
+  }
+
   static async start(params) {
     const { eventsLogger, tallyLogger, eventsLoggerFilter } = params;
 
