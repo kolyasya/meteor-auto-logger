@@ -31,12 +31,17 @@ const packageSettings = {
 };
 
 export default class AutoLogger {
-  constructor(params) {
+  constructor() {
+    if (this instanceof AutoLogger) {
+      throw Error('AutoLogger class cannot be instantiated. Use AutoLogger.start() function.');
+    }
+  }
+
+  static async start(params) {
     const { eventsLogger, tallyLogger, eventsLoggerFilter } = params;
+
     // This is logger for package debugging purposes
     this.packageLogger = getPackageLogger({ packageSettings });
-
-    this.packageLogger('Init AutoLogger instance...');
 
     if (isFunction(eventsLogger)) {
       this.eventsLogger = eventsLogger;
@@ -52,7 +57,7 @@ export default class AutoLogger {
     this.packageLogger('Init params:', params);
 
     if (packageSettings?.enableDDPAutoLogger && this.eventsLogger) {
-      startDDPLogger({
+      await startDDPLogger({
         packageSettings,
         eventsLogger: this.eventsLogger,
         eventsLoggerFilter: this.eventsLoggerFilter,
@@ -60,7 +65,7 @@ export default class AutoLogger {
     }
 
     if (packageSettings?.enableDDPTallyLogger && this.tallyLogger) {
-      startPingPongTally({
+      await startPingPongTally({
         packageSettings,
         tallyLogger: this.tallyLogger,
       });
