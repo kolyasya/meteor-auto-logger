@@ -33,7 +33,7 @@ const packageSettings = {
 export default class AutoLogger {
   constructor() {
     if (this instanceof AutoLogger) {
-      throw Error('AutoLogger class cannot be instantiated.');
+      throw Error('AutoLogger class cannot be instantiated. Use AutoLogger.start() function.');
     }
   }
 
