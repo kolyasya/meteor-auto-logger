@@ -1,14 +1,18 @@
 import getEventMessage from './utils/getEventMessage';
 import getPrettyIPAddress from './utils/getPrettyIPAddress';
-import getPackageLogger from './utils/getPackageLogger';
+import { PackageLogger } from './package-utils';
 
 /**
  * DDP Server Logs
  */
-const startDDPLogger = async ({ packageSettings, eventsLogger, eventsLoggerFilter }) => {
-  const packageLogger = getPackageLogger();
+const startDDPLogger = async ({
+  packageSettings,
+  eventsLogger,
+  eventsLoggerFilter,
+}) => {
+  const logger = PackageLogger();
 
-  packageLogger('Starting DDP Logger...');
+  logger.log('Starting DDP Logger...');
 
   Meteor.server.stream_server.register(
     await Meteor.bindEnvironment(async (socket) => {

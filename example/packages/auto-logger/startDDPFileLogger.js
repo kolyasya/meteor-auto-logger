@@ -2,17 +2,17 @@ import fs from 'fs';
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 
+import { PackageLogger } from './package-utils';
 
-import getPackageLogger from './utils/getPackageLogger';
 
 // ----------------------------------------------------------------------
 // DDP Debugger (Every DDP message, realtime, written raw to file, off by default )
 // ----------------------------------------------------------------------
 
 const startDDPFileLogger = ({ packageSettings }) => {
-  const packageLogger = getPackageLogger();
+  const logger = PackageLogger();
 
-  packageLogger('Starting DDP File logger...');
+  logger.log('Starting DDP File logger...');
 
   let memory = {};
 

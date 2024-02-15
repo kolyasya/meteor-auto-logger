@@ -12,7 +12,11 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  api.use(['accounts-base@2.0.1', 'ecmascript@1.13.0']);
+  api.use([
+    'accounts-base@2.0.1',
+    'ecmascript@0.16.8',
+    'tmeasday:check-npm-versions@1.0.2',
+  ]);
 
   api.mainModule('server.js', 'server');
 });

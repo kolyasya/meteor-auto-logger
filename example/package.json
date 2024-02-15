@@ -6,6 +6,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.20.7",
+    "lodash.isfunction": "^3.0.9",
+    "lodash.pullall": "^4.2.0",
     "meteor-node-stubs": "^1.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

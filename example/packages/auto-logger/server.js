@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import path from 'path';
+import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions';
 import isFunction from 'lodash.isfunction';
 
 import startDDPLogger from './startDDPLogger';
@@ -7,11 +8,10 @@ import startPingPongTally from './startPingPongTally';
 
 import startDDPFileLogger from './startDDPFileLogger';
 
-import getPackageLogger from './utils/getPackageLogger';
-
 import { PackageLogger } from './package-utils';
 
-const meteorRootPath = path?.resolve('.')?.split(`${path.sep}.meteor`)?.[0] || '../../../../..';
+const meteorRootPath =
+  path?.resolve('.')?.split(`${path.sep}.meteor`)?.[0] || '../../../../..';
 
 const defaultSettings = {
   enablePackageDebugLogs: false,
@@ -32,10 +32,20 @@ const packageSettings = {
   ...(Meteor.settings?.packages?.['kolyasya:auto-logger'] || {}),
 };
 
+checkNpmVersions(
+  {
+    'lodash.pullall': '4.2.x',
+    'lodash.isfunction': '3.0.x',
+  },
+  'kolyasya:meteor-pagination'
+);
+
 export default class AutoLogger {
   constructor() {
     if (this instanceof AutoLogger) {
-      throw Error('AutoLogger class cannot be instantiated. Use AutoLogger.start() function.');
+      throw Error(
+        'AutoLogger class cannot be instantiated. Use AutoLogger.start() function.'
+      );
     }
   }
 
@@ -43,9 +53,8 @@ export default class AutoLogger {
     const { eventsLogger, tallyLogger, eventsLoggerFilter } = params;
 
     const logger = PackageLogger({
-      enableLogging:
-      packageSettings?.enablePackageDebugLogs,
-      logPrefix: `kolyasya:auto-logger |`
+      enableLogging: packageSettings?.enablePackageDebugLogs,
+      logPrefix: `kolyasya:auto-logger |`,
     });
 
     if (isFunction(eventsLogger)) {
