@@ -12,8 +12,7 @@ Npm.depends({
 });
 
 Package.onUse(function (api) {
-  // api.versionsFrom('2.3.5');
-  api.use(['accounts-base', 'ecmascript']);
+  api.use(['accounts-base@2.0.1', 'ecmascript@1.13.0']);
 
   api.mainModule('server.js', 'server');
 });
