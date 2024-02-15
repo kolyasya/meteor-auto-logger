@@ -9,6 +9,8 @@ import startDDPFileLogger from './startDDPFileLogger';
 
 import getPackageLogger from './utils/getPackageLogger';
 
+import { PackageLogger } from './package-utils';
+
 const meteorRootPath = path?.resolve('.')?.split(`${path.sep}.meteor`)?.[0] || '../../../../..';
 
 const defaultSettings = {
@@ -40,8 +42,11 @@ export default class AutoLogger {
   static async start(params) {
     const { eventsLogger, tallyLogger, eventsLoggerFilter } = params;
 
-    // This is logger for package debugging purposes
-    this.packageLogger = getPackageLogger({ packageSettings });
+    const logger = PackageLogger({
+      enableLogging:
+      packageSettings?.enablePackageDebugLogs,
+      logPrefix: `kolyasya:auto-logger |`
+    });
 
     if (isFunction(eventsLogger)) {
       this.eventsLogger = eventsLogger;
@@ -53,8 +58,8 @@ export default class AutoLogger {
       this.eventsLoggerFilter = eventsLoggerFilter;
     }
 
-    this.packageLogger('Final package settings:', packageSettings);
-    this.packageLogger('Init params:', params);
+    logger.log('Final package settings:', packageSettings);
+    logger.log('Init params:', params);
 
     if (packageSettings?.enableDDPAutoLogger && this.eventsLogger) {
       await startDDPLogger({
