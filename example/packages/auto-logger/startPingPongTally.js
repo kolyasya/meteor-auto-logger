@@ -91,7 +91,8 @@ const startPingPongTally = async ({ packageSettings, tallyLogger }) => {
 
       // message = abbreviateMessage(message);
 
-      logger(message);
+      // Need to figure out what is packageLogger
+      // packageLogger(message);
       tallyLogger(message);
     }
     PingPongTally.reset();
