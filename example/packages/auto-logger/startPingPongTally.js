@@ -21,7 +21,7 @@ const startPingPongTally = async ({ packageSettings, tallyLogger }) => {
           const messageJSON = JSON.parse(messageDDP);
 
           // Capture statistics about this message to our "ping pong" tally
-          const sessionId = socket._meteorSession.id;
+          const sessionId = socket._meteorSession?.id;
           const sessionStats = PingPongTally.getItem(sessionId) || {};
 
           // Increase number for event type (method, sub or anything else)

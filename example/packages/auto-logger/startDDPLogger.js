@@ -20,13 +20,13 @@ const startDDPLogger = async ({
         'data',
         await Meteor.bindEnvironment(async (messageDDP) => {
           const messageJSON = JSON.parse(messageDDP);
-          const userId = socket._meteorSession.userId;
+          const userId = socket._meteorSession?.userId;
 
           // Log everything except pings and pongs
           if (messageJSON.msg !== 'ping' && messageJSON.msg !== 'pong') {
             const { eventMessage, event } = await getEventMessage({
               clientAddress: getPrettyIPAddress(
-                (socket._meteorSession.connectionHandle || {}).clientAddress
+                (socket._meteorSession?.connectionHandle || {}).clientAddress
               ),
               eventsLoggerFilter,
               messageJSON,
