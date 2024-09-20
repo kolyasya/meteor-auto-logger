@@ -4,11 +4,9 @@ import { Random } from 'meteor/random';
 
 import { PackageLogger } from './package-utils';
 
-
-// ----------------------------------------------------------------------
-// DDP Debugger (Every DDP message, realtime, written raw to file, off by default )
-// ----------------------------------------------------------------------
-
+/**
+ * Writes all DPP messages to file at ddpFileLoggerPath
+ */
 const startDDPFileLogger = ({ packageSettings }) => {
   const logger = PackageLogger();
 
@@ -16,11 +14,10 @@ const startDDPFileLogger = ({ packageSettings }) => {
 
   let memory = {};
 
-  const appendOnNewLine = line => {
+  const appendOnNewLine = (line) => {
     try {
       fs.appendFileSync(packageSettings.ddpFileLoggerPath, line + '\n');
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   };
@@ -42,8 +39,7 @@ const startDDPFileLogger = ({ packageSettings }) => {
 
     try {
       json = { ...json, ...JSON.parse(str) };
-    }
-    catch (e) {
+    } catch (e) {
       console.error(`Ran into a message I couldn't parse: ${str}`);
       json.bad = true;
     }
@@ -64,7 +60,7 @@ const startDDPFileLogger = ({ packageSettings }) => {
   };
 
   Meteor.server.stream_server.register(
-    Meteor.bindEnvironment(socket => {
+    Meteor.bindEnvironment((socket) => {
       const originalSend = socket.send;
       socket.send = function (f) {
         log('Sent', f);
@@ -73,7 +69,7 @@ const startDDPFileLogger = ({ packageSettings }) => {
 
       socket.on(
         'data',
-        Meteor.bindEnvironment(messageDDP => {
+        Meteor.bindEnvironment((messageDDP) => {
           log('Received', messageDDP);
         })
       );

@@ -1,13 +1,15 @@
 import { Meteor } from 'meteor/meteor';
-import path from 'path';
 import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions';
+import path from 'path';
 import isFunction from 'lodash.isfunction';
 
 import startDDPLogger from './startDDPLogger';
-import startPingPongTally from './startPingPongTally';
+import startPingPongTally from './startTallyLogger';
 import startDDPFileLogger from './startDDPFileLogger';
 
 import { PackageLogger } from './package-utils';
+
+import type { AutoLoggerStartParams } from './types';
 
 const meteorRootPath =
   path?.resolve('.')?.split(`${path.sep}.meteor`)?.[0] || '../../../../..';
@@ -17,10 +19,10 @@ const defaultSettings = {
 
   enableDDPAutoLogger: false,
 
-  enableDDPFileLogger: false,
-
   enableDDPTallyLogger: true,
   DDPTallyLoggerSeconds: 60,
+
+  enableDDPFileLogger: false,
 
   customCacheTime: 300000,
   ddpFileLoggerPath: `${meteorRootPath}/ddp-log.json`,
@@ -49,7 +51,7 @@ export default class AutoLogger {
     }
   }
 
-  static async start(params) {
+  static async start(params: AutoLoggerStartParams) {
     const { eventsLogger, tallyLogger, eventsLoggerFilter } = params;
 
     const logger = PackageLogger({

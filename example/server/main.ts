@@ -4,7 +4,6 @@ import { LinksCollection } from '/imports/api/links';
 import AutoLogger from 'meteor/kolyasya:auto-logger';
 
 await AutoLogger.start({
-  // Doing it like this to preserve 'this'
   eventsLogger: (message) => {
     console.log('This is events log message:', message);
   },
@@ -12,7 +11,7 @@ await AutoLogger.start({
     console.log('This is tally log message:', message);
   },
 
-  ddpMessageFilter: ({ messageJSON }) => {
+  eventsLoggerFilter: ({ messageJSON }) => {
     return messageJSON?.method?.includes('loggly.') ? false : true;
   },
 });

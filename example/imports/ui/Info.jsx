@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Random } from "meteor/random";
-import { useTracker } from "meteor/react-meteor-data";
+import { useTracker, useSubscribe } from "meteor/react-meteor-data";
 import { LinksCollection } from "../api/links";
 
 export const Info = () => {
   const [randomParam, setRandomParam] = useState();
 
+  useSubscribe("links", randomParam)
+
   const links = useTracker(() => {
-    Meteor.subscribe("links", randomParam);
     return LinksCollection.find().fetch();
   });
 

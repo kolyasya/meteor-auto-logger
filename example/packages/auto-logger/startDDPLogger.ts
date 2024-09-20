@@ -3,7 +3,7 @@ import getPrettyIPAddress from './utils/getPrettyIPAddress';
 import { PackageLogger } from './package-utils';
 
 /**
- * DDP Server Logs
+ * Logs all DDP messages except for ping/pong and messages filtered by eventsLoggerFilter
  */
 const startDDPLogger = async ({
   packageSettings,

@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import getPrettyUser from './utils/getPrettyUser';
 import getPrettyIPAddress from './utils/getPrettyIPAddress';
 import { PackageLogger } from './package-utils';
@@ -5,8 +6,9 @@ import { PackageLogger } from './package-utils';
 import PingPongTally from './utils/PingPongTally';
 
 /**
- * DDP Ping Pong Tally (Message statistics, timer driven, written to console, on by default)
- * Calculates stats for a given interval
+ * Calculates DDP stats for a given interval (DDPTallyLoggerSeconds)
+ * Returns a formatted message like:
+ * `unknown@127.0.0.1: (connects: 1, subs: 5, unsubs: 3) -> (links: 4, Σ: 4)`
  */
 const startPingPongTally = async ({ packageSettings, tallyLogger }) => {
   const logger = PackageLogger();
