@@ -5,7 +5,6 @@ import isFunction from 'lodash.isfunction';
 
 import startDDPLogger from './startDDPLogger';
 import startPingPongTally from './startPingPongTally';
-
 import startDDPFileLogger from './startDDPFileLogger';
 
 import { PackageLogger } from './package-utils';
@@ -36,6 +35,7 @@ checkNpmVersions(
   {
     'lodash.pullall': '4.2.x',
     'lodash.isfunction': '3.0.x',
+    ylru: '1.x.x',
   },
   'kolyasya:meteor-pagination'
 );

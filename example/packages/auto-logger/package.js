@@ -1,22 +1,24 @@
 Package.describe({
   name: 'kolyasya:auto-logger',
-  version: '0.0.3-beta.5',
+  version: '0.0.3-beta.6',
   summary: 'Auto-logging for Meteor methods and publications',
   git: 'https://github.com/kolyasya/meteor-auto-logger',
   documentation: '../../../README.md',
 });
 
-Npm.depends({
-  ylru: '1.2.1',
-  'lodash.isfunction': '3.0.9',
-});
-
 Package.onUse(function (api) {
   api.versionsFrom(['2.3', '2.8.1', '3.0-beta.0']);
 
-  api.use(['accounts-base', 'ecmascript@0.16.0'], ['server']);
+  api.use(
+    [
+      'accounts-base',
+      'ecmascript@0.16.9',
+      'typescript@5.4.3',
+      'tmeasday:check-npm-versions@2.0.0',
+      'zodern:types@1.0.13',
+    ],
+    ['server']
+  );
 
-  api.use(['tmeasday:check-npm-versions@2.0.0-beta.0']);
-
-  api.mainModule('server.js', 'server');
+  api.mainModule('server.ts', 'server');
 });
