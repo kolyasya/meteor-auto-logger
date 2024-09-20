@@ -1,6 +1,6 @@
 Package.describe({
   name: 'kolyasya:auto-logger',
-  version: '0.0.3-beta.6',
+  version: '1.0.0-beta.0',
   summary: 'Auto-logging for Meteor methods and publications',
   git: 'https://github.com/kolyasya/meteor-auto-logger',
   documentation: '../../../README.md',
