@@ -11,7 +11,7 @@ Package.onUse(function (api) {
 
   api.use(
     [
-      'accounts-base',
+      'accounts-base@3.0.2',
       'ecmascript@0.16.9',
       'typescript@5.4.3',
       'tmeasday:check-npm-versions@2.0.0',
