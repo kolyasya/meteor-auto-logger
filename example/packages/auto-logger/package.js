@@ -14,11 +14,16 @@ Package.onUse(function (api) {
       'accounts-base@3.0.2',
       'ecmascript@0.16.9',
       'typescript@5.4.3',
-      'tmeasday:check-npm-versions@2.0.0',
       'zodern:types@1.0.13',
     ],
     ['server']
   );
 
   api.mainModule('server.ts', 'server');
+});
+
+Npm.depends({
+  'lodash.pullall': '4.2.0',
+  'lodash.isfunction': '3.0.9',
+  ylru: '2.0.0',
 });

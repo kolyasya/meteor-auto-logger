@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+
 import getEventMessage from './utils/getEventMessage';
 import getPrettyIPAddress from './utils/getPrettyIPAddress';
 import { PackageLogger } from './package-utils';
@@ -6,7 +8,7 @@ import { PackageLogger } from './package-utils';
  * Logs all DDP messages except for ping/pong and messages filtered by eventsLoggerFilter
  */
 const startDDPLogger = async ({
-  packageSettings,
+  // packageSettings,
   eventsLogger,
   eventsLoggerFilter,
 }) => {
@@ -14,6 +16,7 @@ const startDDPLogger = async ({
 
   logger.log('Starting DDP Logger...');
 
+  // @ts-ignore
   Meteor.server.stream_server.register(
     await Meteor.bindEnvironment(async (socket) => {
       socket.on(
@@ -24,7 +27,7 @@ const startDDPLogger = async ({
 
           // Log everything except pings and pongs
           if (messageJSON.msg !== 'ping' && messageJSON.msg !== 'pong') {
-            const { eventMessage, event } = await getEventMessage({
+            const eventMessageResult = await getEventMessage({
               clientAddress: getPrettyIPAddress(
                 (socket._meteorSession?.connectionHandle || {}).clientAddress
               ),
@@ -33,7 +36,11 @@ const startDDPLogger = async ({
               userId,
             });
 
-            eventsLogger(eventMessage, event);
+            if (eventMessageResult) {
+              const { eventMessage, event } = eventMessageResult;
+
+              eventsLogger(eventMessage, event);
+            }
           }
         })
       );

@@ -15,6 +15,7 @@ const startPingPongTally = async ({ packageSettings, tallyLogger }) => {
 
   logger.log('Starting Ping Pong Tally...');
 
+  // @ts-ignore
   Meteor.server.stream_server.register(
     Meteor.bindEnvironment((socket) => {
       socket.on(
@@ -39,6 +40,7 @@ const startPingPongTally = async ({ packageSettings, tallyLogger }) => {
 
   Meteor.setInterval(async () => {
     // This looks like it's also accessible from Meteor.default_server.  Difference?
+    // @ts-ignore
     for (let [sessionKey, session] of Meteor.server.sessions) {
       // Construct the pieces of the message
 
@@ -55,7 +57,7 @@ const startPingPongTally = async ({ packageSettings, tallyLogger }) => {
 
       // Get only app's collections like: [ 'users', 'organizations', ...]
       const collectionsNames = Array.from(collectionViews.keys()).filter(
-        (c) => c && !c.startsWith('meteor_')
+        (c: string) => c && !c.startsWith('meteor_')
       );
 
       const prettyUser = await getPrettyUser(session.userId);

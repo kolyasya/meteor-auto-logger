@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { checkNpmVersions } from 'meteor/tmeasday:check-npm-versions';
 import path from 'path';
 import isFunction from 'lodash.isfunction';
 
@@ -33,16 +32,12 @@ const packageSettings = {
   ...(Meteor.settings?.packages?.['kolyasya:auto-logger'] || {}),
 };
 
-checkNpmVersions(
-  {
-    'lodash.pullall': '4.2.x',
-    'lodash.isfunction': '3.0.x',
-    ylru: '1.x.x',
-  },
-  'kolyasya:meteor-pagination'
-);
-
 export default class AutoLogger {
+
+  static eventsLogger;
+  static tallyLogger;
+  static eventsLoggerFilter;
+
   constructor() {
     if (this instanceof AutoLogger) {
       throw Error(
@@ -74,7 +69,7 @@ export default class AutoLogger {
 
     if (packageSettings?.enableDDPAutoLogger && this.eventsLogger) {
       await startDDPLogger({
-        packageSettings,
+        // packageSettings,
         eventsLogger: this.eventsLogger,
         eventsLoggerFilter: this.eventsLoggerFilter,
       });

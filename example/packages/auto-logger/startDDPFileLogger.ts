@@ -32,7 +32,17 @@ const startDDPFileLogger = ({ packageSettings }) => {
     var sec = now.getSeconds();
     var ms = now.getMilliseconds();
 
-    let json = {
+    let json: {
+      direction?: string,
+      date?: string,
+      bad?: boolean,
+      id?: string,
+      name?: string,
+      msg?: string,
+      rawJson?: string,
+      msgLength?: number,
+      randomId?: string
+    } = {
       direction,
       date: `${month}/${day}/${year} ${hour}:${min}:${sec}.${ms}`,
     };
@@ -59,6 +69,7 @@ const startDDPFileLogger = ({ packageSettings }) => {
     appendOnNewLine(JSON.stringify(json));
   };
 
+  // @ts-ignore
   Meteor.server.stream_server.register(
     Meteor.bindEnvironment((socket) => {
       const originalSend = socket.send;
