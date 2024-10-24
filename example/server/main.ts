@@ -3,18 +3,26 @@ import { LinksCollection } from '/imports/api/links';
 
 import AutoLogger from 'meteor/kolyasya:auto-logger';
 
-await AutoLogger.start({
-  eventsLogger: (message) => {
-    console.log('This is events log message:', message);
-  },
-  tallyLogger: (message) => {
-    console.log('This is tally log message:', message);
-  },
+await AutoLogger.start(
+  {
+    eventsLogger: (message) => {
+      console.log('This is events log message:', message);
+    },
+    tallyLogger: (message) => {
+      console.log('This is tally log message:', message);
+    },
 
-  eventsLoggerFilter: ({ messageJSON }) => {
-    return messageJSON?.method?.includes('loggly.') ? false : true;
+    eventsLoggerFilter: ({ messageJSON }) => {
+      return messageJSON?.method?.includes('loggly.') ? false : true;
+    },
   },
-});
+  {
+    // enablePackageDebugLogs: false,
+    enableDDPAutoLogger: false,
+    enableDDPTallyLogger: true,
+    // enableDDPFileLogger: false,
+  }
+);
 
 async function insertLink({ title, url }) {
   await LinksCollection.insertAsync({ title, url, createdAt: new Date() });

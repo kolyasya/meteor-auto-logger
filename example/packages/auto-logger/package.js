@@ -25,5 +25,6 @@ Package.onUse(function (api) {
 Npm.depends({
   'lodash.pullall': '4.2.0',
   'lodash.isfunction': '3.0.9',
+  'defaults': '3.0.0',
   ylru: '2.0.0',
 });

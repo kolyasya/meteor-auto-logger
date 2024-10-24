@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import path from 'path';
 import isFunction from 'lodash.isfunction';
+import defaults from 'defaults';
 
 import startDDPLogger from './startDDPLogger';
 import startPingPongTally from './startTallyLogger';
@@ -8,15 +9,15 @@ import startDDPFileLogger from './startDDPFileLogger';
 
 import { PackageLogger } from './package-utils';
 
-import type { AutoLoggerStartParams } from './types';
+import type { AutoLoggerStartParams, AutoLoggerSettings } from './types';
 
 const meteorRootPath =
   path?.resolve('.')?.split(`${path.sep}.meteor`)?.[0] || '../../../../..';
 
-const defaultSettings = {
+const defaultSettings: AutoLoggerSettings = {
   enablePackageDebugLogs: false,
 
-  enableDDPAutoLogger: false,
+  enableDDPAutoLogger: true,
 
   enableDDPTallyLogger: true,
   DDPTallyLoggerSeconds: 60,
@@ -27,13 +28,7 @@ const defaultSettings = {
   ddpFileLoggerPath: `${meteorRootPath}/ddp-log.json`,
 };
 
-const packageSettings = {
-  ...defaultSettings,
-  ...(Meteor.settings?.packages?.['kolyasya:auto-logger'] || {}),
-};
-
 export default class AutoLogger {
-
   static eventsLogger;
   static tallyLogger;
   static eventsLoggerFilter;
@@ -46,8 +41,22 @@ export default class AutoLogger {
     }
   }
 
-  static async start(params: AutoLoggerStartParams) {
+  static getPackageSettings(settings: AutoLoggerSettings = {}) {
+    const settingsFromFile = defaults(
+      Meteor.settings?.packages?.['kolyasya:auto-logger'] || {},
+      defaultSettings
+    );
+
+    return defaults(settings, settingsFromFile);
+  }
+
+  static async start(
+    params: AutoLoggerStartParams,
+    settings?: AutoLoggerSettings
+  ) {
     const { eventsLogger, tallyLogger, eventsLoggerFilter } = params;
+
+    const packageSettings = this.getPackageSettings(settings);
 
     const logger = PackageLogger({
       enableLogging: packageSettings?.enablePackageDebugLogs,

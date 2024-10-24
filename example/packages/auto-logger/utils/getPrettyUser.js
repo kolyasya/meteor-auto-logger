@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import LRU from 'ylru';
+import { LRU } from 'ylru';
 
 // Cache the user
 const prettyUserIdentifierLRU = new LRU(100);
