@@ -67,3 +67,8 @@ new AutoLogger({
   },
 });
 ```
+
+## Todo
+
+- [ ] Add ability to pass settings to init function, instead of relying on Meteor.settings
+
